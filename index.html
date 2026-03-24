@@ -7,79 +7,75 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; padding: 24px; }
-  h2 { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
-  .entries { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-  .row { display: flex; align-items: center; gap: 10px; }
-  .index { font-size: 13px; color: #888; width: 20px; text-align: right; flex-shrink: 0; }
-  .tc-input {
-    font-size: 20px; font-weight: 600; font-family: 'Courier New', monospace;
-    letter-spacing: 4px; width: 160px; padding: 10px 14px;
-    border: 1px solid #ddd; border-radius: 8px; outline: none; color: #111;
-  }
+  .tc-entries { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .tc-row { display: flex; align-items: center; gap: 10px; }
+  .tc-index { font-size: 13px; color: #888; width: 20px; text-align: right; flex-shrink: 0; }
+  .tc-input { font-size: 20px; font-weight: 600; font-family: 'Courier New', monospace; letter-spacing: 4px; width: 160px; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; outline: none; color: #111; }
   .tc-input:focus { border-color: #888; }
-  .parsed { font-size: 13px; color: #888; min-width: 120px; }
-  .remove-btn {
-    width: 28px; height: 28px; border: 1px solid #eee; border-radius: 6px;
-    background: none; cursor: pointer; color: #aaa; font-size: 18px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .remove-btn:hover { background: #f5f5f5; color: #555; }
-  .actions { display: flex; gap: 8px; margin-bottom: 20px; }
-  .btn {
-    padding: 8px 16px; font-size: 14px; border: 1px solid #ddd;
-    border-radius: 8px; background: none; cursor: pointer; color: #111;
-  }
-  .btn:hover { background: #f5f5f5; }
-  .btn.primary { background: #111; color: #fff; border-color: transparent; }
-  .btn.primary:hover { background: #333; }
-  .result {
-    background: #f7f7f7; border-radius: 12px; padding: 20px 24px; display: none;
-  }
-  .result-label { font-size: 13px; color: #888; margin-bottom: 6px; }
-  .result-value { font-size: 36px; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 2px; color: #111; margin-bottom: 4px; }
-  .result-breakdown { font-size: 13px; color: #888; }
-  .hint { font-size: 12px; color: #bbb; margin-top: 10px; }
+  .tc-parsed { font-size: 13px; color: #888; min-width: 100px; }
+  .tc-remove { width: 28px; height: 28px; border: 1px solid #eee; border-radius: 6px; background: none; cursor: pointer; color: #aaa; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+  .tc-remove:hover { background: #f5f5f5; color: #555; }
+  .tc-actions { display: flex; gap: 8px; margin-bottom: 20px; }
+  .tc-btn { padding: 8px 16px; font-size: 14px; border: 1px solid #ddd; border-radius: 8px; background: none; cursor: pointer; color: #111; }
+  .tc-btn:hover { background: #f5f5f5; }
+  .tc-btn.primary { background: #111; color: #fff; border-color: transparent; }
+  .tc-btn.primary:hover { background: #333; }
+  .tc-result-main { background: #f7f7f7; border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
+  .tc-result-label { font-size: 13px; color: #888; margin-bottom: 6px; }
+  .tc-result-value { font-size: 36px; font-weight: 700; font-family: 'Courier New', monospace; letter-spacing: 2px; color: #111; margin-bottom: 4px; }
+  .tc-result-sub { font-size: 13px; color: #888; }
+  .tc-section-label { font-size: 13px; font-weight: 500; color: #888; margin-bottom: 10px; }
+  .tc-speed-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .tc-speed-card { background: #f7f7f7; border-radius: 8px; padding: 14px; text-align: center; }
+  .tc-speed-badge { font-size: 12px; font-weight: 600; color: #888; margin-bottom: 6px; }
+  .tc-speed-time { font-size: 16px; font-weight: 700; font-family: 'Courier New', monospace; color: #111; margin-bottom: 2px; letter-spacing: 1px; }
+  .tc-speed-detail { font-size: 11px; color: #aaa; }
+  .tc-hint { font-size: 12px; color: #bbb; margin-top: 12px; }
 </style>
 </head>
 <body>
-<h2>시간 계산기 by 혜령&클로드</h2>
-<div class="entries" id="entries"></div>
-<div class="actions">
-  <button class="btn" onclick="addRow()">+ 항목 추가</button>
-  <button class="btn primary" onclick="calculate()">계산하기</button>
+<h2>시간 계산기 by 혜령( •̀ᴗ•́ )و ̑̑</h2>
+<div class="tc-entries" id="entries"></div>
+<div class="tc-actions">
+  <button class="tc-btn" onclick="addRow()">+ 항목 추가</button>
+  <button class="tc-btn primary" onclick="calculate()">계산하기</button>
 </div>
-<div class="result" id="result"></div>
-<p class="hint">형식: HHMMSS — 예) 001810 = 0시간 18분 10초</p>
+<div id="result-area" style="display:none">
+  <div class="tc-result-main">
+    <p class="tc-result-label" id="res-label"></p>
+    <p class="tc-result-value" id="res-value"></p>
+    <p class="tc-result-sub" id="res-sub"></p>
+  </div>
+  <p class="tc-section-label">배속별 재생 시간</p>
+  <div class="tc-speed-grid" id="speed-grid"></div>
+</div>
+<p class="tc-hint">형식: HHMMSS — 예) 001810 = 0시간 18분 10초</p>
 
 <script>
 let rows = [{ id: 1, val: '' }, { id: 2, val: '' }];
 let nextId = 3;
 
 function render() {
-  const container = document.getElementById('entries');
-  container.innerHTML = '';
+  const c = document.getElementById('entries');
+  c.innerHTML = '';
   rows.forEach((row, i) => {
     const div = document.createElement('div');
-    div.className = 'row';
+    div.className = 'tc-row';
     div.innerHTML = `
-      <span class="index">${i + 1}</span>
-      <input class="tc-input" id="inp-${row.id}" type="text" maxlength="6"
-        placeholder="000000" value="${row.val}"
-        oninput="updateVal(${row.id}, this.value)"
-        onkeydown="handleKey(event, ${row.id})" />
-      <span class="parsed">${parseLabel(row.val)}</span>
-      ${rows.length > 1
-        ? `<button class="remove-btn" onclick="removeRow(${row.id})">×</button>`
-        : '<span style="width:28px"></span>'}
+      <span class="tc-index">${i + 1}</span>
+      <input class="tc-input" id="inp-${row.id}" type="text" maxlength="6" placeholder="000000" value="${row.val}"
+        oninput="updateVal(${row.id}, this.value)" onkeydown="handleKey(event, ${row.id})" />
+      <span class="tc-parsed">${parseLabel(row.val)}</span>
+      ${rows.length > 1 ? `<button class="tc-remove" onclick="removeRow(${row.id})">×</button>` : '<span style="width:28px"></span>'}
     `;
-    container.appendChild(div);
+    c.appendChild(div);
   });
 }
 
 function parseLabel(v) {
   if (!v || v.length < 6) return '';
   const h = parseInt(v.slice(0,2)), m = parseInt(v.slice(2,4)), s = parseInt(v.slice(4,6));
-  if (m >= 60 || s >= 60) return '⚠ 잘못된 형식';
+  if (m >= 60 || s >= 60) return '잘못된 형식';
   const parts = [];
   if (h) parts.push(`${h}시간`);
   if (m) parts.push(`${m}분`);
@@ -103,10 +99,7 @@ function updateVal(id, v) {
 function handleKey(e, id) {
   if (e.key === 'Enter') {
     addRow();
-    setTimeout(() => {
-      const last = rows[rows.length - 1];
-      document.getElementById(`inp-${last.id}`)?.focus();
-    }, 0);
+    setTimeout(() => document.getElementById(`inp-${rows[rows.length-1].id}`)?.focus(), 0);
   }
 }
 
@@ -128,6 +121,22 @@ function toSeconds(v) {
   return h * 3600 + m * 60 + s;
 }
 
+function fmt(total) {
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  const p = n => String(n).padStart(2, '0');
+  return { str: `${p(h)}:${p(m)}:${p(s)}`, h, m, s };
+}
+
+function toLabel(h, m, s) {
+  const parts = [];
+  if (h) parts.push(`${h}시간`);
+  if (m) parts.push(`${m}분`);
+  if (s) parts.push(`${s}초`);
+  return parts.join(' ') || '0초';
+}
+
 function calculate() {
   let total = 0, valid = 0;
   rows.forEach(r => {
@@ -135,22 +144,32 @@ function calculate() {
     const s = toSeconds(r.val);
     if (s !== null) { total += s; valid++; }
   });
-  const res = document.getElementById('result');
-  if (valid === 0) { res.style.display = 'none'; return; }
-  const h = Math.floor(total / 3600);
-  const m = Math.floor((total % 3600) / 60);
-  const s = total % 60;
-  const fmt = n => String(n).padStart(2, '0');
-  const parts = [];
-  if (h) parts.push(`${h}시간`);
-  if (m) parts.push(`${m}분`);
-  if (s) parts.push(`${s}초`);
-  res.style.display = 'block';
-  res.innerHTML = `
-    <p class="result-label">총 합계 (${valid}개 항목)</p>
-    <p class="result-value">${fmt(h)}:${fmt(m)}:${fmt(s)}</p>
-    <p class="result-breakdown">${parts.join(' ') || '0초'} · 총 ${total.toLocaleString()}초</p>
-  `;
+
+  const area = document.getElementById('result-area');
+  if (valid === 0) { area.style.display = 'none'; return; }
+
+  const { str, h, m, s } = fmt(total);
+  document.getElementById('res-label').textContent = `총 합계 (${valid}개 항목)`;
+  document.getElementById('res-value').textContent = str;
+  document.getElementById('res-sub').textContent = `${toLabel(h, m, s)} · 총 ${total.toLocaleString()}초`;
+
+  const speeds = [1.25, 1.5, 1.75, 2];
+  const grid = document.getElementById('speed-grid');
+  grid.innerHTML = '';
+  speeds.forEach(spd => {
+    const t = Math.round(total / spd);
+    const { str: sstr, h: sh, m: sm, s: ss } = fmt(t);
+    const card = document.createElement('div');
+    card.className = 'tc-speed-card';
+    card.innerHTML = `
+      <p class="tc-speed-badge">${spd}x</p>
+      <p class="tc-speed-time">${sstr}</p>
+      <p class="tc-speed-detail">${toLabel(sh, sm, ss)}</p>
+    `;
+    grid.appendChild(card);
+  });
+
+  area.style.display = 'block';
 }
 
 render();
