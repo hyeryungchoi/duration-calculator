@@ -7,7 +7,7 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; padding: 24px; }
-  .tc-entries { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .tc-entries { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; margin-top: 16px; }
   .tc-row { display: flex; align-items: center; gap: 10px; }
   .tc-index { font-size: 13px; color: #888; width: 20px; text-align: right; flex-shrink: 0; }
   .tc-input { font-size: 20px; font-weight: 600; font-family: 'Courier New', monospace; letter-spacing: 4px; width: 160px; padding: 10px 14px; border: 1px solid #ddd; border-radius: 8px; outline: none; color: #111; }
@@ -34,7 +34,7 @@
 </style>
 </head>
 <body>
-<h3>시간 계산기 by 혜령( •̀ᴗ•́ )و ̑̑</h3>
+<h2>시간 계산기 by 혜령( •̀ᴗ•́ )و ̑̑</h2>
 <div class="tc-entries" id="entries"></div>
 <div class="tc-actions">
   <button class="tc-btn" onclick="addRow()">+ 항목 추가</button>
@@ -163,7 +163,6 @@ function calculate() {
     card.className = 'tc-speed-card';
     card.innerHTML = `
       <p class="tc-speed-badge">${spd}x</p>
-      <p class="tc-speed-time">${sstr}</p>
       <p class="tc-speed-detail">${toLabel(sh, sm, ss)}</p>
     `;
     grid.appendChild(card);
